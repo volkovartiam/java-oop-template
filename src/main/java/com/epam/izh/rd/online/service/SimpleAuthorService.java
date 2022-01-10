@@ -15,7 +15,7 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     public boolean save(Author author){
-        return false;
+        return authorRepository.save(author);
     }
 
     public Author findByFullName(String name, String lastname){
@@ -28,7 +28,6 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     public int count(){
-
-        return -1;
+        return authorRepository.count();
     }
 }
