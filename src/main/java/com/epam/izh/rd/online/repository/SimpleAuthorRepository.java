@@ -7,12 +7,32 @@ public class SimpleAuthorRepository implements AuthorRepository{
     Author[] authors = {};
 
     public boolean save(Author author){
+        boolean isSave ;
+        if( (findByFullName(author.getName(), author.getLastName() ) != null ) ) {
+            isSave = false;
+        } else {
+            Author[] authorsTempArray = new Author[authors.length + 1];
+            for (int i = 0; i < authors.length; i++) {
+                authorsTempArray[i] = authors[i];
+            }
+            authorsTempArray[authorsTempArray.length - 1] = author;
 
-        return false;
+            authors = new Author[authorsTempArray.length];
+            for (int i = 0; i < authors.length; i++) {
+                authors[i] = authorsTempArray[i];
+            }
+            isSave = true;
+        }
+        return  isSave;
     }
 
     public Author findByFullName(String name, String lastname) {
 
+        for (int i = 0; i < authors.length; i++){
+            if(authors[i].getLastName().equals(lastname) && authors[i].getName().equals(name)){
+                return authors[i];
+            }
+        }
         return null;
     }
 
@@ -22,8 +42,7 @@ public class SimpleAuthorRepository implements AuthorRepository{
     }
 
     public int count(){
-
-        return -1;
+        return authors.length;
     }
 
 }
