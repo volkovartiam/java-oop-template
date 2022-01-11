@@ -37,8 +37,26 @@ public class SimpleAuthorRepository implements AuthorRepository{
     }
 
     public boolean remove(Author author){
+        boolean isRemove ;
+        if( (findByFullName(author.getName(), author.getLastName() ) != null ) ) {
+            isRemove = false;
+        } /*else if (authors.length = 1) {
+            authors = {};
+        } */else {
+            Author[] authorsTempArray = new Author[authors.length - 1 ];
+            for (int i = 0; i < authors.length; i++) {
+                if(!authors[i].equals(author))  {
+                    authorsTempArray[i] = authors[i];
+                }
+            }
 
-        return false;
+            authors = new Author[authorsTempArray.length];
+            for (int i = 0; i < authors.length; i++) {
+                authors[i] = authorsTempArray[i];
+            }
+            isRemove = true;
+        }
+        return  isRemove;
     }
 
     public int count(){

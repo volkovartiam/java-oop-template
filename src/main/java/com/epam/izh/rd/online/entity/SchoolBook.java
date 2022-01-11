@@ -59,6 +59,7 @@ public class SchoolBook extends Book {
         this.publishDate = publishDate;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
