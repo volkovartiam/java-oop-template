@@ -5,7 +5,9 @@ import com.epam.izh.rd.online.entity.Book;
 import com.epam.izh.rd.online.entity.SchoolBook;
 import com.epam.izh.rd.online.repository.BookRepository;
 
-public class SimpleSchoolBookService implements BookService{
+import java.util.Objects;
+
+public class SimpleSchoolBookService implements BookService<SchoolBook>{
 
     private BookRepository<SchoolBook> schoolBookBookRepository;
     private AuthorService authorService;
@@ -18,33 +20,51 @@ public class SimpleSchoolBookService implements BookService{
         this.authorService = authorService;
     }
 
-    public boolean save(Book book){
+    public boolean save(SchoolBook book){
+        Objects.requireNonNull(book, "Book must not be null");
 
-        return false;
+        String authorName = book.getAuthorName();
+        String authorLastName = book.getAuthorLastName();
+
+        Objects.requireNonNull(authorName, "Author's name must not be null");
+        Objects.requireNonNull(authorLastName, "Author's last name must not be null");
+
+        if (authorService.findByFullName(authorName,authorLastName) != null) {
+            return schoolBookBookRepository.save(book);
+        } else {
+            return false;
+        }
     }
 
-    public Book[] findByName(String name){
+    public SchoolBook[] findByName(String name){
 
         return null;
     }
 
     public int getNumberOfBooksByName(String name){
-
-        return -1;
+        return schoolBookBookRepository.findByName(name).length;
     }
 
     public boolean removeByName(String name){
-
-        return false;
+        return schoolBookBookRepository.removeByName(name);
     }
 
     public int count(){
-
-        return -1;
+        return schoolBookBookRepository.count();
     }
 
-    public Author findAuthorByBookName(String name){
 
+    public Author findAuthorByBookName(String name){
+        if(schoolBookBookRepository.count() > 0 & authorService.count() > 0 ) {
+            SchoolBook[] findedBooks = schoolBookBookRepository.findByName(name);
+            String authorLastName;
+            String authorName;
+            for(int i = 0; i < findedBooks.length; i++) {
+                authorLastName = findedBooks[i].getAuthorLastName();
+                authorName = findedBooks[i].getAuthorName();
+                return authorService.findByFullName(authorName, authorLastName);
+            }
+        }
         return null;
     }
 }

@@ -14,10 +14,10 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
             for (int i = 0; i < schoolBooks.length; i++) {
                 newSchoolBooks[i] = schoolBooks[i];
             }
-        newSchoolBooks[schoolBooks.length - 1] = book;
+        newSchoolBooks[schoolBooks.length ] = book;
 
         schoolBooks = new SchoolBook[newSchoolBooks.length];
-            for (int i = 0; i < schoolBooks.length; i++) {
+            for (int i = 0; i < newSchoolBooks.length; i++) {
                 schoolBooks[i] = newSchoolBooks[i];
             }
         return  isSave;
@@ -42,25 +42,23 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
     }
 
     public boolean removeByName(String name){
-        boolean isRemove = true;
+        boolean isRemove = false;
         SchoolBook[] booksForDeleting = findByName(name);
-        if(booksForDeleting.equals(null) ) {
-            isRemove = false;
-        }
-        /*
-        for (int i = 0; i < schoolBooks.length; i++) {
+        if (booksForDeleting.length > 0) {
+            SchoolBook[] newSchoolBooks = new SchoolBook[schoolBooks.length - booksForDeleting.length];
             int j = 0;
-            if(schoolBooks[i].equals(booksForDeleting[j]) {
-                isRemove = false;
+            for (int i = 0; i < schoolBooks.length; i++) {
+                if(!schoolBooks[i].equals(booksForDeleting[j])) {
+                    newSchoolBooks[i] = schoolBooks[j];
+                    j++;
+                }
             }
-        }
-
-        for (int i = 0; i < schoolBooks.length; i++) {
-            if(schoolBooks[i].getName().equals(name)) {
-                isRemove = false;
+            schoolBooks = new SchoolBook[newSchoolBooks.length];
+            for (int i = 0; i < schoolBooks.length; i++) {
+                schoolBooks[i] = newSchoolBooks[i];
             }
+            isRemove = true;
         }
-        */
         return  isRemove;
     }
 

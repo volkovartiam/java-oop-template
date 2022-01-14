@@ -19,12 +19,11 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     public Author findByFullName(String name, String lastname){
-        return null;
+        return authorRepository.findByFullName(name, lastname);
     }
 
     public boolean remove(Author author){
-
-        return false;
+        return authorRepository.remove(author);
     }
 
     public int count(){

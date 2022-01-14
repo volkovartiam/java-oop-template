@@ -29,7 +29,7 @@ public class SimpleAuthorRepository implements AuthorRepository{
     public Author findByFullName(String name, String lastname) {
 
         for (int i = 0; i < authors.length; i++){
-            if(authors[i].getLastName().equals(lastname) && authors[i].getName().equals(name)){
+            if(authors[i].getLastName().equals(lastname) & authors[i].getName().equals(name)){
                 return authors[i];
             }
         }
@@ -38,11 +38,8 @@ public class SimpleAuthorRepository implements AuthorRepository{
 
     public boolean remove(Author author){
         boolean isRemove ;
+
         if( (findByFullName(author.getName(), author.getLastName() ) != null ) ) {
-            isRemove = false;
-        } /*else if (authors.length = 1) {
-            authors = {};
-        } */else {
             Author[] authorsTempArray = new Author[authors.length - 1 ];
             for (int i = 0; i < authors.length; i++) {
                 if(!authors[i].equals(author))  {
@@ -55,6 +52,8 @@ public class SimpleAuthorRepository implements AuthorRepository{
                 authors[i] = authorsTempArray[i];
             }
             isRemove = true;
+        } else {
+            isRemove = false;
         }
         return  isRemove;
     }
