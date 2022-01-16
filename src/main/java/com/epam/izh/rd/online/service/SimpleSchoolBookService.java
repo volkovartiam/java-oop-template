@@ -1,7 +1,6 @@
 package com.epam.izh.rd.online.service;
 
 import com.epam.izh.rd.online.entity.Author;
-import com.epam.izh.rd.online.entity.Book;
 import com.epam.izh.rd.online.entity.SchoolBook;
 import com.epam.izh.rd.online.repository.BookRepository;
 
@@ -56,12 +55,12 @@ public class SimpleSchoolBookService implements BookService<SchoolBook>{
 
     public Author findAuthorByBookName(String name){
         if(schoolBookBookRepository.count() > 0 & authorService.count() > 0 ) {
-            SchoolBook[] findedBooks = schoolBookBookRepository.findByName(name);
+            SchoolBook[] foundBooks = schoolBookBookRepository.findByName(name);
             String authorLastName;
             String authorName;
-            for(int i = 0; i < findedBooks.length; i++) {
-                authorLastName = findedBooks[i].getAuthorLastName();
-                authorName = findedBooks[i].getAuthorName();
+            for(SchoolBook book : foundBooks) {
+                authorLastName = book.getAuthorLastName();
+                authorName = book.getAuthorName();
                 return authorService.findByFullName(authorName, authorLastName);
             }
         }

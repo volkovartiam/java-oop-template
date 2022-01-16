@@ -12,25 +12,20 @@ public class SimpleAuthorRepository implements AuthorRepository{
             isSave = false;
         } else {
             Author[] authorsTempArray = new Author[authors.length + 1];
-            for (int i = 0; i < authors.length; i++) {
-                authorsTempArray[i] = authors[i];
-            }
+            System.arraycopy(authors, 0, authorsTempArray, 0, authors.length);
             authorsTempArray[authorsTempArray.length - 1] = author;
 
             authors = new Author[authorsTempArray.length];
-            for (int i = 0; i < authors.length; i++) {
-                authors[i] = authorsTempArray[i];
-            }
+            System.arraycopy(authorsTempArray, 0, authors, 0, authorsTempArray.length);
             isSave = true;
         }
         return  isSave;
     }
 
     public Author findByFullName(String name, String lastname) {
-
-        for (int i = 0; i < authors.length; i++){
-            if(authors[i].getLastName().equals(lastname) & authors[i].getName().equals(name)){
-                return authors[i];
+        for ( Author author : authors){
+            if(author.getLastName().equals(lastname) & author.getName().equals(name)){
+                return author;
             }
         }
         return null;
@@ -46,11 +41,8 @@ public class SimpleAuthorRepository implements AuthorRepository{
                     authorsTempArray[i] = authors[i];
                 }
             }
-
             authors = new Author[authorsTempArray.length];
-            for (int i = 0; i < authors.length; i++) {
-                authors[i] = authorsTempArray[i];
-            }
+            System.arraycopy(authorsTempArray, 0, authors, 0, authorsTempArray.length);
             isRemove = true;
         } else {
             isRemove = false;
